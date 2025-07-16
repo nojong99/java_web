@@ -8,6 +8,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String home() {
-        return "<h1>씨아이씨디 테스트</h1>";
+        return "Spring Boot Application is running!";
     }
 } 
