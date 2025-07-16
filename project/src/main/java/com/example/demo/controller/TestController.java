@@ -22,6 +22,6 @@ public class TestController {
 
     @GetMapping("/public")
     public ResponseEntity<String> publicEndpoint() {
-        return ResponseEntity.ok("공개 엔드포인트에 접근 성공!");
+        return ResponseEntity.ok("cicd 성공!");
     }
 } 
