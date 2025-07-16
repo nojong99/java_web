@@ -75,5 +75,5 @@ jobs:
         
     - name: Notify deployment
       run: |
-        echo "배포가 완료!"
+        echo "배포!"
         echo "백엔드: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/backend:${{ github.sha }}" 
