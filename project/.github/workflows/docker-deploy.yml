@@ -50,8 +50,6 @@ jobs:
         file: ./Dockerfile.backend
         push: true
         tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/backend:${{ github.sha }}
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
 
     - name: Build Docker image (PR)
       if: github.event_name == 'pull_request'
