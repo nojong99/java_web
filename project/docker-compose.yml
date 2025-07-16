@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-  # Spring Boot 백엔드
   backend:
     build:
       context: .
@@ -9,32 +8,21 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_DATASOURCE_URL=jdbc:h2:mem:testdb
-      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.h2.Driver
-      - SPRING_DATASOURCE_USERNAME=sa
-      - SPRING_DATASOURCE_PASSWORD=
-      - SPRING_H2_CONSOLE_ENABLED=true
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
-      - SPRING_JPA_SHOW_SQL=true
-    volumes:
-      - ./logs:/app/logs
+      - SPRING_PROFILES_ACTIVE=default
     networks:
       - app-network
 
-  # React 프론트엔드
-  # frontend:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile.frontend
-  #   ports:
-  #     - "3000:80"
-  #   depends_on:
-  #     - backend
-  #   networks:
-  #     - app-network
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
 
-  # H2 데이터베이스 (개발용)
   h2-database:
     image: oscarfonts/h2
     ports:
@@ -42,14 +30,9 @@ services:
       - "8181:81"
     environment:
       H2_OPTIONS: "-ifNotExists"
-    volumes:
-      - h2-data:/h2-data
     networks:
       - app-network
 
 networks:
   app-network:
-    driver: bridge
-
-volumes:
-  h2-data: 
+    driver: bridge 
