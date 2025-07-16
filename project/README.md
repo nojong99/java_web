@@ -176,11 +176,53 @@ Frontend는 `http://localhost:3000`에서 실행됩니다.
 4. Redirect URI: `http://localhost:8080/login/oauth2/code/kakao`
 5. `application.properties`에 클라이언트 ID와 시크릿 설정
 
+## CI/CD 파이프라인
+
+이 프로젝트는 GitHub Actions를 사용한 자동화된 CI/CD 파이프라인을 포함합니다.
+
+### GitHub Actions 워크플로우
+
+1. **ci-cd.yml**: 기본 CI/CD 파이프라인
+   - 백엔드 빌드 및 테스트
+   - 프론트엔드 빌드 및 테스트
+   - 통합 테스트
+   - 배포 패키지 생성
+
+2. **docker-deploy.yml**: Docker 기반 배포
+   - Docker 이미지 빌드
+   - GitHub Container Registry에 푸시
+   - 자동 배포
+
+### 트리거 조건
+
+- `main` 또는 `master` 브랜치에 푸시
+- Pull Request 생성
+- 태그 푸시 (`v*` 패턴)
+
+### Docker 배포
+
+```bash
+# 로컬에서 Docker 실행
+docker-compose up -d
+
+# 배포 스크립트 실행 (Linux/Mac)
+./scripts/deploy.sh
+
+# 배포 스크립트 실행 (Windows)
+scripts\deploy.bat
+```
+
+### Docker 이미지
+
+- **백엔드**: `ghcr.io/nojong99/java_web/backend:latest`
+- **프론트엔드**: `ghcr.io/nojong99/java_web/frontend:latest`
+
 ## 개발 환경
 
 - Java 17
-- Node.js 16+
+- Node.js 18+
 - npm 또는 yarn
+- Docker (선택사항)
 
 ## 라이센스
 
