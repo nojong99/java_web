@@ -1,0 +1,3 @@
+@echo off
+echo Spring Boot 백엔드 실행 중...
+gradlew bootRun 
