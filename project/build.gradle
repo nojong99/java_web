@@ -13,6 +13,10 @@ java {
 	}
 }
 
+springBoot {
+    mainClass = 'com.example.demo.ProjectApplication'
+}
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
