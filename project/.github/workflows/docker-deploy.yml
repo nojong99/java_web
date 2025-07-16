@@ -29,24 +29,10 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
-        cache-dependency-path: frontend/package-lock.json
-        
-
     - name: Build backend
       run: |
         chmod +x gradlew
         ./gradlew bootJar
-
-    - name: Build frontend
-      run: |
-        cd frontend
-        npm install
-        npm run build
 
     - name: Log in to Container Registry
       if: github.event_name != 'pull_request'
@@ -67,22 +53,10 @@ jobs:
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
-    - name: Build and push Frontend Docker image
-      if: github.event_name != 'pull_request'
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        file: ./Dockerfile.frontend
-        push: true
-        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/frontend:${{ github.sha }}
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
-
-    - name: Build Docker images (PR)
+    - name: Build Docker image (PR)
       if: github.event_name == 'pull_request'
       run: |
         docker build -f Dockerfile.backend -t backend:test .
-        docker build -f Dockerfile.frontend -t frontend:test .
 
   deploy:
     needs: build-and-push
@@ -102,5 +76,4 @@ jobs:
     - name: Notify deployment
       run: |
         echo "배포가 완료되었습니다!"
-        echo "백엔드: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/backend:${{ github.sha }}"
-        echo "프론트엔드: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/frontend:${{ github.sha }}" 
+        echo "백엔드: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/backend:${{ github.sha }}" 
