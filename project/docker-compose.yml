@@ -23,16 +23,16 @@ services:
       - app-network
 
   # React 프론트엔드
-  frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile.frontend
-    ports:
-      - "3000:80"
-    depends_on:
-      - backend
-    networks:
-      - app-network
+  # frontend:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.frontend
+  #   ports:
+  #     - "3000:80"
+  #   depends_on:
+  #     - backend
+  #   networks:
+  #     - app-network
 
   # H2 데이터베이스 (개발용)
   h2-database:
