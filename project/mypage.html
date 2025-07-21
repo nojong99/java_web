@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지 | Better In Focus</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #EEF2FF;
+            color: #37306B;
+            min-height: 100vh;
+        }
+        .logo {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #6366F1;
+            display: flex;
+            align-items: center;
+        }
+        .logo svg {
+            margin-right: 8px;
+        }
+        .profile-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #A5B4FC;
+            background: #fff;
+        }
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(99,102,241,0.07);
+            padding: 1.5rem 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+        .logout-btn {
+            width: 100%;
+            background: #6366F1;
+            color: #fff;
+            font-weight: 700;
+            border-radius: 8px;
+            padding: 0.9rem 0;
+            margin-top: 2rem;
+            font-size: 1.08rem;
+            box-shadow: 0 2px 8px rgba(99,102,241,0.13);
+            border: none;
+            cursor: pointer;
+            transition: background 0.15s, transform 0.13s;
+        }
+        .logout-btn:hover {
+            background: #4F46E5;
+            transform: scale(1.03);
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const user = {
+            name: '홍길동',
+            email: 'honggildong@email.com',
+            profileImg: 'https://randomuser.me/api/portraits/men/32.jpg',
+        };
+        const myCards = [
+            {
+                icon: (
+                    <svg className="w-7 h-7 text-indigo-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 17v-2a4 4 0 014-4h4m0 0V7a4 4 0 00-4-4H7a4 4 0 00-4 4v10a4 4 0 004 4h4" /></svg>
+                ),
+                title: '내 루틴',
+                desc: '나만의 루틴을 확인하고 관리해보세요.',
+                action: () => alert('내 루틴 보기')
+            },
+            {
+                icon: (
+                    <svg className="w-7 h-7 text-indigo-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                ),
+                title: '할 일',
+                desc: '오늘의 할 일을 한눈에 볼 수 있어요.',
+                action: () => alert('할 일 보기')
+            },
+            {
+                icon: (
+                    <svg className="w-7 h-7 text-indigo-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" /></svg>
+                ),
+                title: '설정',
+                desc: '앱 환경을 내게 맞게 설정하세요.',
+                action: () => alert('설정')
+            },
+        ];
+        const MyPage = () => {
+            return (
+                <div className="min-h-screen bg-indigo-50 pb-10">
+                    <header className="bg-white shadow-sm py-4 px-5 flex justify-between items-center sticky top-0 z-10">
+                        <div className="logo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                            Better In Focus
+                        </div>
+                    </header>
+                    <main className="container mx-auto px-4 mt-8">
+                        <div className="flex flex-col items-center mb-8">
+                            <img src={user.profileImg} alt="프로필" className="profile-img mb-3" />
+                            <div className="text-xl font-bold text-indigo-700 mb-1">{user.name}</div>
+                            <div className="text-sm text-indigo-400">{user.email}</div>
+                        </div>
+                        <div className="mb-6">
+                            {myCards.map((card, idx) => (
+                                <div className="card flex items-center cursor-pointer hover:shadow-lg transition" key={idx} onClick={card.action}>
+                                    <div className="mr-4">{card.icon}</div>
+                                    <div>
+                                        <div className="font-bold text-indigo-700 mb-1">{card.title}</div>
+                                        <div className="text-sm text-indigo-400">{card.desc}</div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <button className="logout-btn" onClick={() => alert('로그아웃!')}>로그아웃</button>
+                    </main>
+                </div>
+            );
+        };
+        ReactDOM.render(<MyPage />, document.getElementById('root'));
+    </script>
+</body>
+</html> 
